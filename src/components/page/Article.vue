@@ -1,6 +1,5 @@
 <template>
-	<div class="table"   
-	v-loading="fullscreenLoading">
+	<div class="table" v-loading="fullscreenLoading">
 		<div class="crumbs">
 			<el-breadcrumb separator="/">
 				<el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 文章</el-breadcrumb-item>
@@ -60,6 +59,14 @@
 						<el-radio label="mysql">mysql</el-radio>
 					</el-radio-group>
 				</el-form-item>
+				<el-form-item label="图片">
+					<el-upload action="/api/upload/image" list-type="picture-card" accept="image/*" :limit="imgLimit" :file-list="fileList2"
+					 :multiple="isMultiple" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAvatarSuccess"
+					 :before-upload="beforeAvatarUpload" :on-exceed="handleExceed" :on-error="imgUploadError">
+						<i class="el-icon-plus"></i>
+					</el-upload>
+				</el-form-item>
+
 				<el-form-item label="简介">
 					<el-input type="textarea" rows="5" v-model="addform.keyword"></el-input>
 				</el-form-item>
@@ -96,6 +103,13 @@
 						<el-radio label="php">php</el-radio>
 						<el-radio label="mysql">mysql</el-radio>
 					</el-radio-group>
+				</el-form-item>
+				<el-form-item label="图片">
+					<el-upload action="/api/upload/image" list-type="picture-card" accept="image/*" :limit="imgLimit" :file-list="fileList3"
+					 :multiple="isMultiple" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleAvatarSuccess"
+					 :before-upload="beforeAvatarUpload" :on-exceed="handleExceed" :on-error="imgUploadError">
+						<i class="el-icon-plus"></i>
+					</el-upload>
 				</el-form-item>
 				<el-form-item label="简介">
 					<el-input type="textarea" rows="5" v-model="form.keyword"></el-input>
@@ -162,7 +176,15 @@
 					placeholder: '输入内容'
 				},
 				idx: 0,
-				fullscreenLoading: true
+				fullscreenLoading: true,
+				dialogImageUrl: '',
+				dialogVisible: false,
+				fileList2: [],
+				fileList3: [],
+				isMultiple: true,
+				uploadImage: [],
+				uploadImage2: [],
+				imgLimit: 6
 			}
 		},
 		created() {
@@ -185,7 +207,7 @@
 				this.getData();
 			},
 			getData() {
-				this.fullscreenLoading=true;
+				this.fullscreenLoading = true;
 				this.url = '/api/article/detail';
 				this.$axios.post(this.url, {
 					page: this.cur_page,
@@ -199,7 +221,7 @@
 					this.tableData = res.data.data.data;
 					this.paginateTotal = res.data.data.total;
 					this.pageSize = res.data.data.per_page
-					this.fullscreenLoading=false;
+					this.fullscreenLoading = false;
 				})
 			},
 			formatter(row, column) {
@@ -213,7 +235,7 @@
 				this.addVisible = true;
 			},
 			saveAdd() {
-				this.fullscreenLoading=true;
+				this.fullscreenLoading = true;
 				this.addVisible = false;
 				this.url = '/api/article/add/save';
 				this.$axios.post(this.url, {
@@ -222,15 +244,17 @@
 					status: this.addform.status,
 					type: this.addform.type,
 					keyword: this.addform.keyword,
-					content: this.addform.content
+					content: this.addform.content,
+					image: this.uploadImage
 				}, {
 					headers: {
 						'Accept': 'application/json',
 						'Authorization': 'Bearer ' + this.token
 					}
 				}).then((res) => {
-					this.fullscreenLoading=false;
+					this.fullscreenLoading = false;
 					if (res.data.code == 1) {
+						this.fileList2 = [];
 						this.getData();
 						this.$message.success('文章新增成功');
 					} else {
@@ -243,6 +267,7 @@
 			},
 			handleEdit(row) {
 				this.idx = row.id;
+				this.fileList3 = [];
 				this.form = {
 					id: row.id,
 					name: row.name,
@@ -252,6 +277,23 @@
 					keyword: row.keyword,
 					content: row.content
 				}
+				if (row.article_images.length > 0) {
+					for (let i = 0; i < row.article_images.length; i++) {
+						console.log(row.article_images[i]['image']);
+						this.fileList3.push({
+							name: '123',
+							url: this.appUrl + '/storage/' + row.article_images[i]['image'],
+							response: {
+								code: 1,
+								data: row.article_images[i]['image'],
+								message: 'success'
+							}
+						});
+						this.uploadImage2.push(row.article_images[i]['image']);
+					}
+
+				}
+
 				this.editVisible = true;
 			},
 			handleDelete(row) {
@@ -273,7 +315,8 @@
 			},
 			// 保存编辑
 			saveEdit(id) {
-				this.fullscreenLoading=true;
+				console.log(this.uploadImage2);
+				this.fullscreenLoading = true;
 				this.editVisible = false;
 				this.url = '/api/article/update';
 				this.$axios.post(this.url, {
@@ -283,14 +326,16 @@
 					status: this.form.status,
 					type: this.form.type,
 					keyword: this.form.keyword,
-					content: this.form.content
+					content: this.form.content,
+					image: this.uploadImage2
+
 				}, {
 					headers: {
 						'Accept': 'application/json',
 						'Authorization': 'Bearer ' + this.token
 					}
 				}).then((res) => {
-					this.fullscreenLoading=false;
+					this.fullscreenLoading = false;
 					if (res.data.code == 1) {
 						this.getData();
 						this.$message.success(`修改第 ${this.idx} 行成功`);
@@ -301,7 +346,7 @@
 			},
 			// 确定删除
 			deleteRow() {
-				this.fullscreenLoading=true;
+				this.fullscreenLoading = true;
 				this.delVisible = false;
 				this.url = '/api/article/deleted';
 				this.$axios.post(this.url, {
@@ -312,7 +357,7 @@
 						'Authorization': 'Bearer ' + this.token
 					}
 				}).then((res) => {
-					this.fullscreenLoading=false;
+					this.fullscreenLoading = false;
 					if (res.data.code == 1) {
 						this.getData();
 						this.$message.success('删除成功');
@@ -320,6 +365,48 @@
 						this.$message.error('请求错误，请稍后再试');
 					}
 				})
+			},
+			handleRemove(file, fileList) { //移除图片
+				this.uploadImage = [];
+				this.uploadImage2 = [];
+				console.log(fileList);
+				for (let i = 0; i < fileList.length; i++) {
+					this.uploadImage.push(fileList[i]['response']['data']);
+					this.uploadImage2.push(fileList[i]['response']['data']);
+				}
+
+			},
+			handlePictureCardPreview(file) { //预览图片时调用
+				this.dialogImageUrl = file.url;
+				this.dialogVisible = true;
+			},
+
+			beforeAvatarUpload(file) { //文件上传之前调用做一些拦截限制
+				// console.log(file);
+				const isJPG = true;
+				// const isJPG = file.type === 'image/jpeg';
+				const isLt2M = file.size / 1024 / 1024 < 2;
+
+				// if (!isJPG) {
+				//   this.$message.error('上传头像图片只能是 JPG 格式!');
+				// }
+				if (!isLt2M) {
+					this.$message.error('上传图片大小不能超过 2MB!');
+				}
+				return isJPG && isLt2M;
+			},
+			handleAvatarSuccess(res, file) { //图片上传成功
+				this.uploadImage.push(res.data);
+				this.imageUrl = URL.createObjectURL(file.raw);
+				this.uploadImage2.push(res.data);
+				console.log(this.uploadImage2);
+
+			},
+			handleExceed(files, fileList) { //图片上传超过数量限制
+				this.$message.error('上传图片不能超过6张!');
+			},
+			imgUploadError(err, file, fileList) { //图片上传失败调用
+				this.$message.error('上传图片失败!');
 			}
 		}
 	}

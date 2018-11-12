@@ -13,6 +13,7 @@ Vue.use(ElementUI, {
 Vue.prototype.$axios = axios;
 
 router.beforeEach((to, from, next) => {
+	Vue.prototype.appUrl='http://apiadmin.test';
 	const token = localStorage.getItem('token');
 	const startTime = localStorage.getItem('token_start_time');
 	const nowTime = (new Date()).getTime();
