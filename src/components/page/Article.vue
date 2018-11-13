@@ -39,7 +39,7 @@
 		</div>
 
 		<!-- 新增弹出框 -->
-		<el-dialog :visible.sync="addVisible" width="60%">
+		<el-dialog :visible.sync="addVisible" width="60%" @close='closeDialog'>
 			<el-form ref="addform" :model="addform" label-width="100px">
 				<el-form-item label="名称">
 					<el-input v-model="addform.name"></el-input>
@@ -84,7 +84,7 @@
 
 
 		<!-- 编辑弹出框 -->
-		<el-dialog :visible.sync="editVisible" width="60%">
+		<el-dialog :visible.sync="editVisible" width="60%" @close='closeDialog'>
 			<el-form ref="form" :model="form" label-width="100px">
 				<el-form-item label="名称">
 					<el-input v-model="form.name"></el-input>
@@ -142,8 +142,16 @@
 	import 'quill/dist/quill.snow.css';
 	import 'quill/dist/quill.bubble.css';
 	import {
-		quillEditor
-	} from 'vue-quill-editor';
+		quillEditor,
+		Quill
+	} from 'vue-quill-editor'
+	import {
+		container,
+		ImageExtend,
+		QuillWatch
+	} from 'quill-image-extend-module'
+
+	Quill.register('modules/ImageExtend', ImageExtend)
 	export default {
 		name: 'basetable',
 		data() {
@@ -171,9 +179,30 @@
 					created_at: '',
 					type: ''
 				},
-				content: '',
+				content: '编辑输入的内容',
 				editorOption: {
-					placeholder: '输入内容'
+					modules: {
+						ImageExtend: {
+							loading: true,
+							size: 1, // 可选参数 图片大小，单位为M，1M = 1024kb
+							name: 'file',
+							action: '/api/upload/editimage',
+							response: (res) => {
+								return res.data
+							},
+							sizeError: () => {
+								this.$message.error('上传图片大小不能超过 1MB!');
+							}
+						},
+						toolbar: {
+							container: container,
+							handlers: {
+								'image': function() {
+									QuillWatch.emit(this.quill.id)
+								}
+							}
+						}
+					}
 				},
 				idx: 0,
 				fullscreenLoading: true,
@@ -206,6 +235,11 @@
 				this.cur_page = val;
 				this.getData();
 			},
+			closeDialog() {
+				this.fileList3 = [];
+				this.uploadImage2 = [];
+				this.fileList2 = [];
+			},
 			getData() {
 				this.fullscreenLoading = true;
 				this.url = '/api/article/detail';
@@ -233,6 +267,7 @@
 				this.addform.keyword = '';
 				this.addform.content = '';
 				this.addVisible = true;
+				this.uploadImage = [];
 			},
 			saveAdd() {
 				this.fullscreenLoading = true;
@@ -254,7 +289,6 @@
 				}).then((res) => {
 					this.fullscreenLoading = false;
 					if (res.data.code == 1) {
-						this.fileList2 = [];
 						this.getData();
 						this.$message.success('文章新增成功');
 					} else {
@@ -267,7 +301,6 @@
 			},
 			handleEdit(row) {
 				this.idx = row.id;
-				this.fileList3 = [];
 				this.form = {
 					id: row.id,
 					name: row.name,
@@ -291,9 +324,7 @@
 						});
 						this.uploadImage2.push(row.article_images[i]['image']);
 					}
-
 				}
-
 				this.editVisible = true;
 			},
 			handleDelete(row) {
@@ -328,7 +359,6 @@
 					keyword: this.form.keyword,
 					content: this.form.content,
 					image: this.uploadImage2
-
 				}, {
 					headers: {
 						'Accept': 'application/json',

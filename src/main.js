@@ -14,6 +14,7 @@ Vue.prototype.$axios = axios;
 
 router.beforeEach((to, from, next) => {
 	Vue.prototype.appUrl='http://apiadmin.test';
+	//Vue.prototype.appUrl='http://120.77.146.13';
 	const token = localStorage.getItem('token');
 	const startTime = localStorage.getItem('token_start_time');
 	const nowTime = (new Date()).getTime();
