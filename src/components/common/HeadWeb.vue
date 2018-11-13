@@ -1,13 +1,13 @@
 <template>
 	<div class="header_box">
-		<div class="header">
+		<div class="header_web">
 			<ul class="app-header">
 				<li class="app-header-menuicon">
 					<i class="layui-icon layui-icon-more-vertical"></i>
 				</li>
 			</ul>
 			<h1 class="logo">
-				<a href="#" style="color:#fff;">logo</a>
+				<a href="#" ><img style="width: 100%;" src="../../../static/images/logo.png" alt=""></a>
 			</h1>
 			<div class="nav" style="visibility: visible">
 				<a href="#/index" v-bind:class="{ active: indexActive }">首页</a>
