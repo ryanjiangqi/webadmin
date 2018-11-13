@@ -2,6 +2,12 @@
 	<div class="quill-wrap">
 		<web-head></web-head>
 		<div class="content">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+				<el-breadcrumb-item>活动管理</el-breadcrumb-item>
+				<el-breadcrumb-item>活动列表</el-breadcrumb-item>
+				<el-breadcrumb-item>活动详情</el-breadcrumb-item>
+			</el-breadcrumb>
 			<div class="title">
 				<h5>欢迎您的到来</h5>
 				<h3>好礼品我们造,做好产品，我们是认真的</h3>
