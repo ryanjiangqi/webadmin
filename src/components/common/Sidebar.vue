@@ -44,19 +44,19 @@
                         title: '系统首页'
                     },
                     {
-                        icon: 'el-icon-lx-cascades',
+                        icon: 'el-icon-lx-group',
                         index: 'user',
                         title: '管理员'
                     },
 					{
-						icon: 'el-icon-lx-cascades',
+						icon: 'el-icon-lx-goods',
 						index: 'article',
 						title: '产品'
 					}, 
                     {
-                        icon: 'el-icon-lx-emoji',
-                        index: 'icon',
-                        title: '测试模块'
+                        icon: 'el-icon-lx-addressbook',
+                        index: 'about',
+                        title: '关于我们'
                     }
                 ]
             }

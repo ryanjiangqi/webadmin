@@ -57,7 +57,7 @@
 								localStorage.setItem('ms_username', this.ruleForm.username);
 								localStorage.setItem('token', res.data.access_token);
 								localStorage.setItem('token_start_time', (new Date()).getTime());
-								this.$router.push('/');
+								this.$router.push('/dashboard');
 							}
 						}).catch((res) => {
 							this.$message.error('用户名或密码错误');

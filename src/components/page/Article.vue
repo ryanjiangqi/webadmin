@@ -206,7 +206,7 @@
 				},
 				idx: 0,
 				fullscreenLoading: true,
-				dialogImageUrl: '',
+				dialogImageUrl: '',	
 				dialogVisible: false,
 				fileList2: [],
 				fileList3: [],
