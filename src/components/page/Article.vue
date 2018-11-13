@@ -53,10 +53,10 @@
 						<el-radio label="0">未发布</el-radio>
 					</el-radio-group>
 				</el-form-item>
-				<el-form-item label="文章类型">
+				<el-form-item label="是否推荐到首页">
 					<el-radio-group v-model="addform.type">
-						<el-radio label="php">php</el-radio>
-						<el-radio label="mysql">mysql</el-radio>
+						<el-radio label="1">是</el-radio>
+						<el-radio label="0">否</el-radio>
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item label="图片">
@@ -70,7 +70,7 @@
 				<el-form-item label="简介">
 					<el-input type="textarea" rows="5" v-model="addform.keyword"></el-input>
 				</el-form-item>
-				<el-form-item label="文章类型">
+				<el-form-item label="文章详情">
 					<el-checkbox-group>
 						<quill-editor ref="myTextEditor" v-model="addform.content" :options="editorOption"></quill-editor>
 					</el-checkbox-group>
@@ -98,10 +98,10 @@
 						<el-radio label="0">未发布</el-radio>
 					</el-radio-group>
 				</el-form-item>
-				<el-form-item label="文章类型">
+				<el-form-item label="是否推荐到首页">
 					<el-radio-group v-model="form.type">
-						<el-radio label="php">php</el-radio>
-						<el-radio label="mysql">mysql</el-radio>
+						<el-radio label="1">是</el-radio>
+						<el-radio label="0">否</el-radio>
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item label="图片">
@@ -114,7 +114,7 @@
 				<el-form-item label="简介">
 					<el-input type="textarea" rows="5" v-model="form.keyword"></el-input>
 				</el-form-item>
-				<el-form-item label="文章类型">
+				<el-form-item label="文章详情">
 					<el-checkbox-group>
 						<quill-editor ref="myTextEditor" v-model="form.content" :options="editorOption"></quill-editor>
 					</el-checkbox-group>
@@ -169,7 +169,7 @@
 				addVisible: false,
 				addform: {
 					status: '0',
-					type: 'php'
+					type: '0'
 				},
 				form: {
 					id: '',
@@ -206,7 +206,7 @@
 				},
 				idx: 0,
 				fullscreenLoading: true,
-				dialogImageUrl: '',	
+				dialogImageUrl: '',
 				dialogVisible: false,
 				fileList2: [],
 				fileList3: [],
@@ -306,7 +306,7 @@
 					name: row.name,
 					author: row.author,
 					status: row.status.toString(),
-					type: row.type,
+					type: row.type.toString(),
 					keyword: row.keyword,
 					content: row.content
 				}

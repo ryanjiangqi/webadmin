@@ -141,7 +141,7 @@ export default new Router({
 			component: resolve => require(['../components/page/WebAbout.vue'], resolve)
 		},
 		{
-			path: '/detail',
+			path: '/detail/id/:id',
 			component: resolve => require(['../components/page/Detail.vue'], resolve)
 		}
 

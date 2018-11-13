@@ -11,8 +11,8 @@
 			</h1>
 			<div class="nav" style="visibility: visible">
 				<a href="#/index" v-bind:class="{ active: indexActive }">首页</a>
-				<a href="#/product" v-bind:class="{ active: productActive }">案例</a>
-				<a href="#/webabout" v-bind:class="{ active: aboutActive }">关于</a>
+				<a href="#/product" v-bind:class="{ active: productActive }">产品</a>
+				<a href="#/webabout" v-bind:class="{ active: aboutActive }">关于我们</a>
 			</div>
 		</div>
 	</div>

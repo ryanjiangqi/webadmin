@@ -4,78 +4,24 @@
 		<div class="content">
 			<div class="title">
 				<h5>欢迎您的到来</h5>
-				<h3>好礼品我们造,用心做好产品</h3>
+				<h3>好礼品我们造,做好产品，我们是认真的</h3>
 				<h4>We build good products and make good products.</h4>
 			</div>
 			<div class="prod-show">
 				<div class="layui-fluid">
 					<div class="row layui-col-space12 layui-clear">
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img1.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
+						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3" v-for="value in productData">
+							<a v-bind:href="'#/detail/id/'+value.id">
+								<div class="img-txt" style="margin-bottom: 20px;">
+									<img style="width: 100%;" v-bind:src="appUrl + '/storage/' + value.article_images[0]['image']" alt="">
+									<h4>{{value.name.substring(1,20)}}</h4>
+								</div>
+							</a>
 						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img2.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img3.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						
-
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<web-foot></web-foot>
 	</div>
@@ -89,15 +35,34 @@
 	export default {
 		data: function() {
 			return {
-				
+				productData: []
 			}
 		},
 		methods: {
-		
+			getData() {
+				this.fullscreenLoading = true;
+				this.url = '/api/article/webdetail';
+				this.$axios.post(this.url, {
+					page: this.cur_page,
+					select_word: this.select_word
+				}, {
+					headers: {
+						'Accept': 'application/json',
+						'Authorization': 'Bearer ' + this.token
+					}
+				}).then((res) => {
+					console.log(res);
+					this.productData = res.data.data;
+					this.fullscreenLoading = false;
+				})
+			}
 		},
-		components:{
-			webHead,webFoot
+		created() {
+			this.getData();
+		},
+		components: {
+			webHead,
+			webFoot
 		}
 	}
 </script>
-

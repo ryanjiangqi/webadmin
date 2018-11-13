@@ -7,12 +7,11 @@
 				<h3>好礼品我们造,用心做好产品</h3>
 				<h4>We build good products and make good products.</h4>
 			</div>
-			<div class="layui-carousel imgbox" id="test1">
-				<div carousel-item class="imgH">
-					<div><img style="width: 100%" src="../../../static/images/sy_banner1.jpg"></div>
-					<div><img style="width: 100%" src="../../../static/images/sy_banner1.jpg"></div>
-				</div>
-			</div>
+			<el-carousel indicator-position="outside" height="700px">
+				<el-carousel-item v-for="item in 4" :key="item">
+					<img style="width: 100%" src="../../../static/images/sy_banner1.jpg">
+				</el-carousel-item>
+			</el-carousel>
 			<div class="prod-show">
 				<div class="layui-fluid">
 					<div class="row layui-col-space12 layui-clear">
@@ -117,15 +116,32 @@
 	export default {
 		data: function() {
 			return {
-				
+
 			}
 		},
 		methods: {
-		
+
 		},
-		components:{
-			webHead,webFoot
+		components: {
+			webHead,
+			webFoot
 		}
 	}
 </script>
 
+<style>
+	.el-carousel__item h3 {
+		color: #475669;
+		font-size: 18px;
+		opacity: 0.75;
+		margin: 0;
+	}
+
+	.el-carousel__item:nth-child(2n) {
+		background-color: #99a9bf;
+	}
+
+	.el-carousel__item:nth-child(2n+1) {
+		background-color: #d3dce6;
+	}
+</style>
