@@ -44,11 +44,6 @@
 				this.url = '/api/article/productdetail';
 				this.$axios.post(this.url, {
 					id: this.productId
-				}, {
-					headers: {
-						'Accept': 'application/json',
-						'Authorization': 'Bearer ' + this.token
-					}
 				}).then((res) => {
 					this.productDetail = res.data.data.content;
 					this.name = res.data.data.name;

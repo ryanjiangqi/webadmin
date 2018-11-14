@@ -45,11 +45,6 @@
 				this.$axios.post(this.url, {
 					page: this.cur_page,
 					select_word: this.select_word
-				}, {
-					headers: {
-						'Accept': 'application/json',
-						'Authorization': 'Bearer ' + this.token
-					}
 				}).then((res) => {
 					console.log(res);
 					this.productData = res.data.data;

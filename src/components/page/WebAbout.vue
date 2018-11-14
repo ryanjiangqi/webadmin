@@ -8,9 +8,9 @@
 				<el-breadcrumb-item>活动列表</el-breadcrumb-item>
 				<el-breadcrumb-item>活动详情</el-breadcrumb-item>
 			</el-breadcrumb>
-		
+
 			<div class="about-info" style="padding-top: 0;" v-html="productDetail">
-			{{productDetail}}
+				{{productDetail}}
 
 			</div>
 		</div>
@@ -33,18 +33,11 @@
 		methods: {
 			getData() {
 				this.fullscreenLoading = true;
-				this.url = '/api/about/detail';
-				this.$axios.post(this.url, {
-
-				}, {
-					headers: {
-						'Accept': 'application/json',
-						'Authorization': 'Bearer ' + this.token
-					}
-				}).then((res) => {
+				this.url = '/api/about/webdetail';
+				this.$axios.post(this.url, {}).then((res) => {
 					this.productDetail = res.data.data.content;
 					this.fullscreenLoading = false;
-					
+
 				})
 			}
 		},
