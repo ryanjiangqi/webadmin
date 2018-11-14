@@ -13,6 +13,7 @@ module.exports = {
     proxyTable: {
       '/api':{
           target:'http://apiadmin.test',
+					//target:'http://120.77.146.13',
           changeOrigin:true
           
       },

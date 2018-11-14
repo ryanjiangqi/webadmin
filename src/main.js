@@ -32,6 +32,7 @@ router.beforeEach((to, from, next) => {
 			}
 		});
 	}
+	console.log(to.path);
 	if (!token && to.path !== '/login') {
 		next('/login');
 	} else if (to.meta.permission) {
