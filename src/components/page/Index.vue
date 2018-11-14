@@ -38,7 +38,7 @@
 								<div class="text">
 									<p>{{values.name.substring(1,20)}}</p>
 									<h4>{{values.keyword}}</h4>
-									<a href="details.html">查看更多 ></a>
+									<a style="font-size: 14px;" v-bind:href="'#/detail/id/'+values.id">查看详情 ></a>
 								</div>
 							</div>
 							<div class="layui-col-xs12 layui-col-sm12 layui-col-md8 bot-img-box">
