@@ -1,7 +1,7 @@
 <template>
-	<div class="quill-wrap">
+	<div class="quill-wrap" v-loading="fullscreenLoading">
 		<web-head></web-head>
-		<div class="details-content">
+		<div class="details-content"  style="min-height: 850px;">
 			<el-breadcrumb separator-class="el-icon-arrow-right" style='margin-top: 20px;'>
 				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
 				<el-breadcrumb-item>活动管理</el-breadcrumb-item>
@@ -34,7 +34,8 @@
 				productDetail: '',
 				name: '',
 				keyword: '',
-				productImg: []
+				productImg: [],
+				fullscreenLoading: true,
 			}
 		},
 		methods: {
@@ -58,6 +59,9 @@
 				})
 			}
 		},
+		mounted(){
+    console.log("页面加载完成")
+},
 		components: {
 			webHead,
 			webFoot

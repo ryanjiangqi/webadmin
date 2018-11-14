@@ -1,7 +1,7 @@
 <template>
-	<div class="quill-wrap">
+	<div class="quill-wrap" v-loading="fullscreenLoading">
 		<web-head></web-head>
-		<div class="details-content">
+		<div class="details-content" style="min-height: 850px;">
 			<div class="title">
 				<h5>欢迎您的到来</h5>
 				<h3>好礼品我们造,做好产品，我们是认真的</h3>

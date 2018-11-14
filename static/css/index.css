@@ -40,7 +40,7 @@ body{font: 12px/1.5 PingFangSC-Regular,Tahoma,'Microsoft Yahei',sans-serif;}
 /*footer*/
 .footer{background: #231f20; text-align: center; padding:65px;}
 .footer .line{width: 220px; height: 2px; background: #dedede; margin:0 auto; }
-.footer p.copyright{font-size: 14px; color: #dedede; line-height: 24px; padding:70px 0 40px 0;}
+.footer p.copyright{font-size: 14px; color: #dedede; line-height: 24px; padding:20px 0 0px 0;}
 .footer .icon_box i{color: #fff; font-size: 26px;}
 .footer .icon_box i.weixin-icon{padding-right: 15px;}
 .footer .icon_box i.weibo-icon{padding-left: 15px;}
@@ -58,7 +58,7 @@ body{font: 12px/1.5 PingFangSC-Regular,Tahoma,'Microsoft Yahei',sans-serif;}
 .content .prod-show{padding: 0; max-width: 1200px; margin:0 auto;}
 .content .prod-show .img-txt h3{line-height: 70px; background: #f9f9f9; font-size: 18px; color: #666666; text-align: center;}
 .content .prod-descr{max-width: 1200px; margin:0 auto;}
-.content .prod-descr .item{position: relative; padding-bottom: 160px; margin-bottom: 240px;}
+.content .prod-descr .item{position: relative; padding-bottom: 160px; margin-bottom: 80px;margin-top: 20px;}
 .content .prod-descr .item .bot-img-box{position:absolute; right: 0px; bottom: 0px;}
 .content .prod-descr .item img{width: 100%;}
 .content .prod-descr .item .text{padding:0 70px 0 80px; color: #363636;}

@@ -5,11 +5,7 @@
 			@2016 ALL ADHFGJKSHH<br />
 			E-MAIL:66666666@162.com<br />
 			TEL:400-888-888
-		</p>
-		<div class="icon_box">
-			<a href="#"><i class="layui-icon layui-icon-login-wechat weixin-icon"></i></a>
-			<a href="#"><i class="layui-icon layui-icon-login-weibo weibo-icon"></i></a>
-		</div>
+		</p>	
 	</div>
 </template>
 
