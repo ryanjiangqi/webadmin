@@ -15,92 +15,40 @@
 			<div class="prod-show">
 				<div class="layui-fluid">
 					<div class="row layui-col-space12 layui-clear">
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img1.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img2.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img3.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
-						</div>
-						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-							<div class="img-txt">
-								<img style="width: 100%;" src="../../../static/images/sy_img4.jpg" alt="">
-								<h3>食品包装</h3>
-							</div>
+						<div class="layui-col-xs6 layui-col-sm6 layui-col-md3" v-for="value in productData">
+							<a v-bind:href="'#/detail/id/'+value.id">
+								<div class="img-txt" style="margin-bottom: 20px;">
+									<img style="width: 100%;" v-bind:src="appUrl + '/storage/' + value.article_images[0]['image']" alt="">
+									<h4>{{value.name.substring(1,20)}}</h4>
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="prod-descr">
 				<div class="layui-fluid">
-					<div class="layui-row">
+					
+					<div class="layui-row"  v-for="values in productDataBig">
 						<div class="item layui-clear">
 							<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-								<img src="../../../static/images/sy_img5.jpg" class="left-img">
+								<img v-bind:src="appUrl + '/storage/' + values.article_images[0]['image']" class="left-img">
 							</div>
 							<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
 								<div class="text">
-									<h3>优秀包装设计美学</h3>
-									<p>本公司专门为您打造定制的商品包装。本公司专门为您打造定制的商品包装。</p>
+									<p>{{values.name.substring(1,20)}}</p>
+									<h4>{{values.keyword}}</h4>
 									<a href="details.html">查看更多 ></a>
 								</div>
 							</div>
 							<div class="layui-col-xs12 layui-col-sm12 layui-col-md8 bot-img-box">
 								<div class="bot-img">
-									<img src="../../../static/images/sy_img6.jpg">
+									<img v-bind:src="appUrl + '/storage/' + values.article_images[1]['image']">
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="layui-row">
-						<div class="item layui-clear">
-							<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-								<img src="../../../static/images/sy_img7.jpg" class="left-img">
-							</div>
-							<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-								<div class="text">
-									<h3>上等材质制作包装</h3>
-									<p>本公司专门为您打造定制的商品包装。本公司专门为您打造定制的商品包装。</p>
-									<a href="details.html">查看更多 ></a>
-								</div>
-							</div>
-							<div class="layui-col-xs12 layui-col-sm12 layui-col-md8 bot-img-box">
-								<div class="bot-img">
-									<img src="../../../static/images/sy_img8.jpg">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="layui-row">
-						<div class="item layui-clear">
-							<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-								<img src="../../../static/images/sy_img9.jpg" class="left-img">
-							</div>
-							<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-								<div class="text">
-									<h3>高级设备流水制作</h3>
-									<p>本公司专门为您打造定制的商品包装。本公司专门为您打造定制的商品包装。</p>
-									<a href="details.html">查看更多 ></a>
-								</div>
-							</div>
-							<div class="layui-col-xs12 layui-col-sm12 layui-col-md8 bot-img-box">
-								<div class="bot-img">
-									<img src="../../../static/images/sy_img610.jpg">
-								</div>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -116,11 +64,37 @@
 	export default {
 		data: function() {
 			return {
-
+				productData: [],
+				productDataBig: []
 			}
 		},
 		methods: {
+			getData() {
+				this.fullscreenLoading = true;
+				this.url = '/api/article/indexdetail';
+				this.$axios.post(this.url, {
 
+				}).then((res) => {
+					console.log(res);
+					this.productData = res.data.data;
+					this.fullscreenLoading = false;
+				})
+			},
+			getDataBig() {
+				this.fullscreenLoading = true;
+				this.url = '/api/article/bigdetail';
+				this.$axios.post(this.url, {
+
+				}).then((res) => {
+					console.log(res);
+					this.productDataBig = res.data.data;
+					this.fullscreenLoading = false;
+				})
+			}
+		},
+		created() {
+			this.getData();
+			this.getDataBig();
 		},
 		components: {
 			webHead,
